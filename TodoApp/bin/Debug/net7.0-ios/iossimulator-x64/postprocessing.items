@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <_PostProcessingItem Include="TodoApp.app/TodoApp">
+      <BCSymbolMapName>TodoApp.bcsymbolmap</BCSymbolMapName>
+      <NoDSymUtil>true</NoDSymUtil>
+      <dSYMSourcePathExists>false</dSYMSourcePathExists>
+      <NoSymbolStrip>true</NoSymbolStrip>
+      <dSYMInfoPlistRelativePath>TodoApp.app.dSYM\Contents\Info.plist</dSYMInfoPlistRelativePath>
+      <SymbolFile>/Users/marwyn/Projects/TodoApp/TodoApp/obj/Debug/net7.0-ios/iossimulator-x64/mtouch-symbols.list</SymbolFile>
+      <DSymName>TodoApp.app.dSYM</DSymName>
+      <SourceProjectPath>/Users/marwyn/Projects/TodoApp/TodoApp</SourceProjectPath>
+    </_PostProcessingItem>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TodoApp.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="CustomButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+
+            <Style x:Key="TaskLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Padding" Value="20,10"/>
+            </Style>
+
+            <Style x:Key="CustomStackLayout" TargetType="StackLayout"> 
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Padding="20">
+            <Entry Placeholder="Enter task" x:Name="TaskEntry" Margin="0, 0, 0, 10"/>
+            <Button Text="Add Task" Clicked="OnAddTaskClicked" Margin="0, 0, 0, 20"/>
+
+            <ListView x:Name="TaskListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand"
+                                         Style="{StaticResource CustomStackLayout}">
+                                <Label Text="{Binding TaskName}" Style="{StaticResource TaskLabelStyle}" HorizontalOptions="StartAndExpand"/>
+                                <Button Text="Delete" Clicked="OnDeleteTaskClicked"
+                                        CommandParameter="{Binding .}" Style="{StaticResource CustomButtonStyle}"
+                                        HorizontalOptions="End"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+    </StackLayout>
+</ContentPage>
+
