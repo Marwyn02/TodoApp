@@ -6,10 +6,15 @@
     xmlns:local="clr-namespace:TodoApp"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
+    <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="MainPage" />-->
+
+    <ShellContent
+        Title="Registration"
+        ContentTemplate="{DataTemplate local:RegistrationPage}"
+        Route="RegistrationPage" />
 
     <FlyoutItem
 

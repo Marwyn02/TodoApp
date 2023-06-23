@@ -15,7 +15,7 @@ namespace TodoApp
             TaskListView.ItemsSource = tasks;
         }
 
-        private void OnAddTaskClicked(object sender, EventArgs e)
+        private async void OnAddTaskClicked(object sender, EventArgs e)
         {
             string taskName = TaskEntry.Text;
             if (!string.IsNullOrWhiteSpace(taskName))
