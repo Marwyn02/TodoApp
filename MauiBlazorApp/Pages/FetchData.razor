@@ -1,0 +1,81 @@
+﻿@page "/fetchdata"
+@attribute [Authorize]
+
+@using MauiBlazorAuth0App.Data
+@using MauiBlazorAuth0App.Models 
+@using MauiBlazorAuth0App.Services
+@inject ITodoService TodoService
+@inject NavigationManager NavManager
+
+<h1>Task List</h1>
+
+@*<p>This component demonstrates fetching data from a service.</p>*@
+
+@if (todos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Due</th>
+                    <th>Title</th>
+                    <th>Done</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var todo in todos)
+                {
+                    <tr>
+                        <td style="color:gray">@todo.Due</td>
+                        <td>@todo.Title</td>
+                        <td>
+                            @if (todo.IsCompleted == true)
+                                {
+                                    <p style="color:green">Done</p>
+                                } else
+                                {
+                                    <p style="color:gray">Not yet</p>
+                                }
+                        </td>
+                        <td>
+                            <button type="submit" @onclick="@(()=>EditTodo(todo.TodoId))" class="btn btn-primary">Edit</button>
+                        </td>
+                        <td>
+                            <button type="submit" @onclick="@(()=>DeleteTodo(todo))" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<TodoModel> todos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await TodoService.GetAllTodo();
+    }
+
+    private void EditTodo(int todoId)
+    {
+        NavManager.NavigateTo($"update_todo/{todoId}");
+    }
+
+    private async void DeleteTodo(TodoModel todo)
+    {
+        var response = await TodoService.DeleteTodo(todo);
+        if (response > 0)
+        {
+            await OnInitializedAsync();
+            this.StateHasChanged();
+
+            await App.Current.MainPage.DisplayAlert("Task Deleted!", "Your task has been deleted from the table", "OK");
+        }
+    }
+}

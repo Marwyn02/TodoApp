@@ -1,0 +1,111 @@
+﻿@page "/add_update_todo"
+@page "/update_todo/{TodoId:int}"
+
+@using MauiBlazorAuth0App.Services
+@inject ITodoService TodoService
+@inject NavigationManager NavManager
+
+@attribute [Authorize]
+
+
+<h3>Add / Edit</h3>
+
+<div class="form-group mt-2">
+    <label>Due</label>
+    <input @bind="due" class="form-control" asp-for="DateTime" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+</div>
+
+<div class="form-group mt-2">
+    <label>Title</label>
+    <input @bind="title" class="form-control" placeholder="Enter task name" />
+</div>
+
+@if (true)
+{
+    <div class="form-group mt-2">
+        <label>Done?</label>
+        <div class="d-flex flex-row">
+            <div class="col-6 d-flex justify-content-between">
+                <div class="form-check">
+                    <input checked="@(isCompleted != false)" @onchange="@(()=> setIsCompleted(true))" class="form-check-input" type="radio" name="flexRadioDefault">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Done
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input checked="@(isCompleted == false)" @onchange="@(()=> setIsCompleted(false))" class="form-check-input" type="radio" name="flexRadioDefault">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Not yet
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <button @onclick="AddTodoRecord" class="btn btn-success mt-3" type="submit">Submit</button>
+</div>
+
+@code {
+
+    [Parameter]
+    public int TodoId { get; set; }
+
+    private string title;
+    private DateTime due;
+    private bool isCompleted;
+
+    private void setIsCompleted(bool isCompleted)
+    {
+        this.isCompleted = isCompleted;
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+        if (TodoId > 0)
+        {
+            var response = await TodoService.GetTodoById(TodoId);
+            if (response != null)
+            {
+                title = response.Title;
+                due = response.Due;
+                isCompleted = response.IsCompleted;
+            }
+        }
+    }
+
+    private async void AddTodoRecord()
+    {
+        var todoModel = new Models.TodoModel
+        {
+            Due = due,
+            Title = title,
+            IsCompleted = isCompleted,
+            TodoId = TodoId
+        };
+
+        int response = -1;
+        if (TodoId > 0)
+        {
+            response = await TodoService.UpdateTodo(todoModel);
+        }
+        else
+        {
+            response = await TodoService.AddTodo(todoModel);
+        }
+
+        if (response > 0)
+        {
+            title = string.Empty;
+            this.StateHasChanged();
+            await App.Current.MainPage.DisplayAlert("Task Saved!", "Task recorded to Todo Table.", "OK");
+            NavManager.NavigateTo($"fetchdata");
+        }
+        else
+        {
+            await App.Current.MainPage.DisplayAlert("Oops!", "Something went wrong while adding record.", "OK");
+        }
+    }
+}
+
