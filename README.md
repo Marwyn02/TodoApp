@@ -8,7 +8,7 @@ Packages: (Notes: Install the packages first before building the solution.)
    -  SQLitePCLRaw.provider.dynamic_cdecl
 
 
-# Todo / MauiProgram.cs
+# MauiBlazorApp / Services / TodoService.cs
 
 This file contains the directory path for the local database in computer.
 
