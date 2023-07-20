@@ -5,27 +5,25 @@
 
 <h1>Hello, @Username!</h1>
 
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<p>Welcome to Group 9 Task Management System project.</p>
 
 <img src="@Picture">
 
-@code { 
-  private string Username = "Anonymous User";
-  private string Picture = "";
+@code {
+    private string Username = "Anonymous User";
+    private string Picture = "";
 
-  protected override async Task OnInitializedAsync()
-  {
-    var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-    Username = state.User.Identity.Name?? string.Empty;
+        Username = state.User.Identity.Name ?? string.Empty;
 
-    Picture = state.User.Claims
-                .Where(c => c.Type.Equals("picture"))
-                .Select(c => c.Value)
-                .FirstOrDefault() ?? string.Empty;
+        Picture = state.User.Claims
+                    .Where(c => c.Type.Equals("picture"))
+                    .Select(c => c.Value)
+                    .FirstOrDefault() ?? string.Empty;
 
-    await base.OnInitializedAsync();
-  }
+        await base.OnInitializedAsync();
+    }
 }

@@ -7,54 +7,77 @@
 
 @attribute [Authorize]
 
-
-<h3>Add / Edit</h3>
-
-<div class="form-group mt-2">
-    <label>Due</label>
-    <input @bind="due" class="form-control" asp-for="DateTime" asp-format="{0:yyyy-MM-ddTHH:mm}" />
-</div>
-
-<div class="form-group mt-2">
-    <label>Title</label>
-    <input @bind="title" class="form-control" placeholder="Enter task name" />
-</div>
-
-@if (true)
+@if (TodoId > 0)
 {
-    <div class="form-group mt-2">
-        <label>Done?</label>
-        <div class="d-flex flex-row">
-            <div class="col-6 d-flex justify-content-between">
-                <div class="form-check">
-                    <input checked="@(isCompleted != false)" @onchange="@(()=> setIsCompleted(true))" class="form-check-input" type="radio" name="flexRadioDefault">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Done
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input checked="@(isCompleted == false)" @onchange="@(()=> setIsCompleted(false))" class="form-check-input" type="radio" name="flexRadioDefault">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Not yet
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
+        <h2>Add task</h2>
+} else
+{
+        <h2>Edit your task</h2>
 }
 
-<div>
-    <button @onclick="AddTodoRecord" class="btn btn-success mt-3" type="submit">Submit</button>
+
+<div class="container mt-4">
+    <div class="row justify-content-between">
+        <div class="col">
+            <div class="form-group">
+                <label class="form-label h6 input-label">Due:</label>
+                <input @bind="due" type="datetime-local" />
+            </div>
+        </div>
+        <div class="col">
+            @if (TodoId > 0)
+            {
+                if (isCompleted == false)
+                {
+                    <div class="ms-auto justify-content-end float-end">
+                        <button @onclick="(() => setIsCompleted(true))" class="btn btn-success">Done</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="ms-auto justify-content-end float-end">
+                        <button @onclick="(() => setIsCompleted(false))" class="btn btn-outline-success">Undone</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </div>
 
-@code {
+<div class="container mt-2 mb-4 input-bg rounded">
+    <div class="form-group">
+        <label class="form-label h6 input-label">Name</label>
+        <input @bind="title" class="form-control" placeholder="Enter task name" required />
+    </div>
 
+    <div class="row justify-content-end mt-3">
+        @if (TodoId > 0)
+        {
+            <div class="col">
+                <button @onclick="AddTodoRecord" class="btn btn-primary me-2 rounded" type="submit">Update task</button>
+                <button @onclick="CancelButton" class="btn due-pill rounded" type="submit">Cancel</button>
+            </div>
+        }
+        else
+        {
+            <div class="col">
+                <button @onclick="AddTodoRecord" class="btn btn-success me-2 rounded" type="submit">Create task</button>
+                <button @onclick="CancelButton" class="btn rounded due-pill" type="submit">Back</button>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
     [Parameter]
     public int TodoId { get; set; }
 
     private string title;
-    private DateTime due;
+    private DateTime due = DateTime.Now;
     private bool isCompleted;
+
+
 
     private void setIsCompleted(bool isCompleted)
     {
@@ -73,6 +96,11 @@
                 isCompleted = response.IsCompleted;
             }
         }
+    }
+
+    private void CancelButton()
+    {
+        NavManager.NavigateTo($"fetchdata");
     }
 
     private async void AddTodoRecord()

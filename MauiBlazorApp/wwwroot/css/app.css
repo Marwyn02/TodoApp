@@ -1,5 +1,61 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.input-bg {
+    border: 2px solid gray;
+    padding: 30px 25px;
+}
+
+.input-label {
+    color: #444;
+}
+
+.animate-fade-in-out {
+    animation-name: fading;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+
+.todo-done {
+    border: 1px solid green;
+    background-color: #BAF3BA;
+}
+
+.todo-missed {
+    border: 1px solid red;
+    background-color: #FFC6C2;
+}
+
+.todo-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.due-pill {
+    background-color: #E84855;
+    color: #ddd;
+}
+
+@keyframes fading {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.25;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    75% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

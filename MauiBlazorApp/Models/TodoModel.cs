@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using SQLite;
 namespace MauiBlazorAuth0App.Models
 {
@@ -9,7 +10,7 @@ namespace MauiBlazorAuth0App.Models
 
 		public string Title { get; set; }
 
-		public DateTime Due { get; set; } 
+		public DateTime Due { get; set; }
 
 		public bool IsCompleted { get; set; }
 	}

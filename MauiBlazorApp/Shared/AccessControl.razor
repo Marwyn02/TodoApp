@@ -3,10 +3,10 @@
 <AuthorizeView>
     <Authorized>
         Hello, @context.User.Identity.Name!
-        <a href="#" @onclick="Logout">Log out</a>
+        <button class="logout-button ms-2" @onclick="Logout">Sign out</button>
     </Authorized>
     <NotAuthorized>
-        <a href="#" @onclick="Login">Log in</a>
+        <button class="login-button" @onclick="Login">Sign in</button>
     </NotAuthorized>
 </AuthorizeView>
 

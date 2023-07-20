@@ -40,7 +40,7 @@ namespace MauiBlazorAuth0App.Services
 
         public async Task<List<TodoModel>> GetAllTodo()
         {
-            return await _dbConnection.Table<TodoModel>().ToListAsync();
+            return await _dbConnection.Table<TodoModel>().OrderByDescending(x => x.Due).ToListAsync();
         }
 
         public async Task<TodoModel> GetTodoById(int TodoId)
